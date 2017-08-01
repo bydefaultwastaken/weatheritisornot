@@ -10,11 +10,11 @@ RSpec.describe LocationsController, type: :controller, vcr: true do
   let(:user) { User.create!(email: "test@test.com", password: "abcd1234") }
 
   let(:valid_attributes) {
-    { title: "The Bean", description: "Technically it's called Cloud Gate", address: "Millennium Park, Chicago" }
+    { name: "The Bean", weather: "Technically it's called Cloud Gate", address: "Millennium Park, Chicago" }
   }
 
   let(:invalid_attributes) {
-    { title: "", description: "There's nothing really here.", address: "Millennium Park, Chicago" }
+    { name: "", weather: "There's nothing really here.", address: "Millennium Park, Chicago" }
   }
 
   before { sign_in(user) }
@@ -113,7 +113,7 @@ RSpec.describe LocationsController, type: :controller, vcr: true do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        { title: "This is a different title" }
+        { name: "This is a different name" }
       }
 
       it "updates the requested location" do
@@ -122,7 +122,7 @@ RSpec.describe LocationsController, type: :controller, vcr: true do
         expect {
           put :update, params: {id: location.to_param, location: new_attributes}
         }.to change {
-          location.reload.title
+          location.reload.name
         }
       end
 

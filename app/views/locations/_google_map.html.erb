@@ -1,7 +1,8 @@
 <iframe
-  width="100%"
-  height="350"
+  width="40%"
+  height="60%"
   frameborder="0" style="border:0"
-  src="https://www.google.com/maps/embed/v1/place?key=<%= Rails.application.secrets.google_api_key
-      %>&q=<%= location.latitude.floor(5) %>,<%= location.longitude.floor(5) %>" allowfullscreen>
+  src="https://www.google.com/maps/embed/v1/view?key=<%= Rails.application.secrets.google_api_key
+      %>&center=<%=location.latitude.floor(5)%>,<%=location.longitude.floor(5)%>&zoom=10&maptype=satellite">
 </iframe>
+

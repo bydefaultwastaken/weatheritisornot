@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TextMessager do
+RSpec.describe TextMessenger do
   subject { described_class }
   let(:recipient) { '8005551212' }
   let(:sender) { '8005551313' }
@@ -15,18 +15,18 @@ RSpec.describe TextMessager do
   end
 
   it "saves the configuration you pass in" do
-    messager = subject.new(recipient: recipient, message: message)
+    messenger = subject.new(recipient: recipient, message: message)
 
-    expect(messager.recipient).to eq(recipient)
-    expect(messager.message).to eq(message)
+    expect(messenger.recipient).to eq(recipient)
+    expect(messenger.message).to eq(message)
   end
 
   it "creates a message when requested" do
     messages = double(create: "yay")
     allow(Twilio::REST::Client).to receive(:new).and_return(double(messages: messages))
 
-    messager = subject.new(recipient: recipient, message: message, from: sender)
-    response = messager.send
+    messenger = subject.new(recipient: recipient, message: message, from: sender)
+    response = messenger.send
 
     expect(messages).to have_received(:create).with(from: sender, to: recipient, body: message)
     expect(response).to eq("yay")

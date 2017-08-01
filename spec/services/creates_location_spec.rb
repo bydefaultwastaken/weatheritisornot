@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CreatesLocation, :vcr do
   subject { described_class }
   let(:valid_attributes) {
-    { title: "The Bean", description: "Technically it's called Cloud Gate", address: "Millennium Park, Chicago" }
+    { name: "The Bean", weather: "Technically it's called Cloud Gate", address: "Millennium Park, Chicago" }
   }
 
   describe "#call" do
@@ -24,20 +24,9 @@ RSpec.describe CreatesLocation, :vcr do
       expect(service).to be_success
     end
 
-    it "sends a text message" do
-      messager = double(send: true)
-      allow(TextMessager).to receive(:new) { messager }
-      service = subject.new(valid_attributes)
-
-      service.call
-
-      expect(TextMessager).to have_received(:new)
-      expect(messager).to have_received(:send)
-    end
-
     context "with invalid attributes" do
       let(:invalid_attributes) {
-        { title: "", description: "There's nothing really here.", address: "Millennium Park, Chicago" }
+        { name: "", weather: "There's nothing really here.", address: "Millennium Park, Chicago" }
       }
 
       it "does not save the record" do
@@ -59,13 +48,22 @@ RSpec.describe CreatesLocation, :vcr do
         expect(service.errors).to eq(service.location.errors.full_messages)
       end
 
-      it "doesn't send a text message" do
-        allow(TextMessager).to receive(:new)
-        service = subject.new(invalid_attributes)
+      # it "doesn't send a text message" do
+      #   allow(TextMessenger).to receive(:new)
+      #   service = subject.new(invalid_attributes)
 
-        service.call
+      #   service.call
 
-        expect(TextMessager).not_to have_received(:new)
+      #   expect(TextMessenger).not_to have_received(:new)
+      # end
+
+      # it "enqueues a job to send a text message" do
+      #   allow(TextAdminJob).to receive(:perform_later)
+
+      #   service = subject.new(valid_attributes)
+      #   service.call
+
+      #   expect(TextAdminJob).to have_received(:perform_later).with(service.location)
       end
     end
   end

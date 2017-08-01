@@ -26,7 +26,7 @@ class LocationsController < ApplicationController
     @location = service.location
 
     if service.success?
-      redirect_to @location, notice: 'Location was successfully created.'
+      redirect_to @location, notice: 'Location added.'
     else
       render :new
     end
@@ -35,7 +35,7 @@ class LocationsController < ApplicationController
   # PATCH/PUT /locations/1
   def update
     if @location.update(location_params)
-      redirect_to @location, notice: 'Location was successfully updated.'
+      redirect_to @location, notice: 'Location updated.'
     else
       render :edit
     end
@@ -45,7 +45,7 @@ class LocationsController < ApplicationController
   def destroy
     @location.destroy
 
-    redirect_to locations_url, notice: 'Location was successfully destroyed.'
+    redirect_to locations_url, notice: 'Location deleted.'
   end
 
   private
@@ -55,6 +55,6 @@ class LocationsController < ApplicationController
   end
 
   def location_params
-    params.require(:location).permit(:title, :description, :address)
+    params.require(:location).permit(:name, :weather, :address)
   end
 end

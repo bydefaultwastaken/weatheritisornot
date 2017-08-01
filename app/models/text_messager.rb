@@ -1,4 +1,4 @@
-class TextMessager
+class TextMessenger
   attr_reader :recipient, :message, :from
 
   def initialize(recipient:, message:, from: Rails.application.secrets.twilio_phone)

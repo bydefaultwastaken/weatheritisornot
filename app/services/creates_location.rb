@@ -16,7 +16,7 @@ class CreatesLocation
     end
 
     @location.save
-    send_text_message
+    # send_text_message
   end
 
   def success?
@@ -25,10 +25,7 @@ class CreatesLocation
 
   private
 
-  def send_text_message
-    TextMessager.new(
-      recipient: Rails.application.secrets.admin_phone,
-      message: "The location '#{@location.title}' was just added. Go vet it!"
-    ).send
-  end
+  # def send_text_message
+  #   TextAdminJob.perform_later(@location)
+  # end
 end
