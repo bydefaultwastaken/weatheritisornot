@@ -1,16 +1,45 @@
 require 'httparty'
+require 'pry'
 class WeatherController < ApplicationController
   # before_action :set_location, only: [:show]
 
   # GET /location_weather
-  def show
-    url = "http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=#{Rails.application.secrets.openweathermap_api_key}" 
+  def index
+    @location ||= Location.find(params[:location_id])
+    # url = "http://api.openweathermap.org/data/2.5/weather?lat=location.latitude.floor(5)&lon=location.longitude.floor(5)&appid=#{Rails.application.secrets.openweathermap_api_key}" 
+    binding.pry
+    url = "http://api.openweathermap.org/data/2.5/weather?lat=#{@location.latitude.floor(5)}&lon=#{@location.longitude.floor(5)}&appid=#{Rails.application.secrets.openweathermap_api_key}"
     @response = HTTParty.get(url)
     weather_conditions = @response["weather"]
-    @current_weather = weather_conditions[0]["main"]  
+    binding.pry
+    @current_weather = weather_conditions[0]["main"]
   end
-end
+end    
 
+# PATCH/PUT /locations/1
+#   def update
+#     if @location.update(location_params)
+#       redirect_to @location, notice: 'Location updated.'
+#     else
+#       render :edit
+#     end
+#   end
+
+# private
+
+#   def set_location
+#     @location = Location.find(params[:id])
+#   end
+
+#   def location_params
+#     params.require(:location).permit(:name, :weather, :address)
+#   end
+
+
+  
+  # @location = Location.find(params[@location_id])
+    # @current_weather = RetrievesLocationWeather.new(query: params[Rails.application.secrets.openweathermap_api_key, location.latitude.floor, location.longitude.floor]).call
+  
   # @weather = RetrievesLocationWeather.new(query: params[:Rails.application.secrets.amdoren_api_key, :location.latitude.floor(5), :location.longitude.floor(5)]).call
 
   # url = "https://www.amdoren.com/api/weather.php?api_key=#{Rails.application.secrets.amdoren_api_key}&lat=#{40.727639}&lon=#{-73.999985}"
@@ -42,14 +71,7 @@ end
   #   end
   # end
 
-  # PATCH/PUT /locations/1
-  # def update
-  #   if @location.update(location_params)
-  #     redirect_to @location, notice: 'Location updated.'
-  #   else
-  #     render :edit
-  #   end
-  # end
+
 
   # DELETE /locations/1
   # def destroy
@@ -58,13 +80,5 @@ end
   #   redirect_to locations_url, notice: 'Location deleted.'
   # end
 
-#   private
 
-#   def set_location
-#     @location = Location.find(params[:id])
-#   end
-
-#   def location_params
-#     params.require(:location).permit(:name, :weather, :address)
-#   end
 # end

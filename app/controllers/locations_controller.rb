@@ -1,5 +1,6 @@
 class LocationsController < ApplicationController
   before_action :set_location, only: [:show, :edit, :update, :destroy]
+  # after_action :location_weather_update, only: [:show, :edit, :update, :destroy]
 
   # GET /locations
   def index
@@ -8,6 +9,7 @@ class LocationsController < ApplicationController
 
   # GET /locations/1
   def show
+    @location ||= Location.find(params[:id])
   end
 
   # GET /locations/new
@@ -57,4 +59,9 @@ class LocationsController < ApplicationController
   def location_params
     params.require(:location).permit(:name, :weather, :address)
   end
+
+  # def location_weather_update
+  #   @location.current_weather = RetrievesLocationWeather.new(:Rails_application_secrets_openweathermap_api_key, :latitude, :longitude).call 
+  # end  
+
 end

@@ -1,3 +1,4 @@
+<%= 'require pry' %>
 <div class='page-header'>
   <h3><%= @location.name %></h3>
 </div>
@@ -14,12 +15,13 @@
     <h4>Actual weather:</h4>
     <%= render 'weather_map', location: @location %>
     <br>
-    <<%= render 'weather_forecast', location: @location %>
+    <%= render 'weather_forecast', location: @location %>
+    <h4><<%= @location.current_weather %></h4>
   </div>
 </div>
 
 <div class='well-sm'>
   <%= link_to 'Edit', edit_location_path(@location), class: 'btn btn-info' %> |
   <%= link_to 'Go Back', locations_path %> |
-  <%= link_to 'Weather', weather_path %>
+  <%= link_to 'Weather', location_weather_index_path(@location) %>
 </div>
