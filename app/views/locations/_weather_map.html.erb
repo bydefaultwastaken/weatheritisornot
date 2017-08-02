@@ -1,6 +1,6 @@
 <iframe
-  width="40%"
-  height="60%"
+  width="100%"
+  height="100%"
   frameborder="0" style="border:0"
   src="http://api.wunderground.com/api/<%= Rails.application.secrets.wunderground_api_key
       %>/satellite/image.gif?lat=<%=location.latitude.floor(1)%>&lon=<%=location.longitude.floor(1)%>&radius=100&width=280&height=280&key=sat_vis&basemap=1">     

@@ -1,20 +1,25 @@
 require 'httparty'
-require 'pry'
 class WeatherController < ApplicationController
-  # before_action :set_location, only: [:show]
-
+  score = 0
+  
   # GET /location_weather
   def index
     @location ||= Location.find(params[:location_id])
     # url = "http://api.openweathermap.org/data/2.5/weather?lat=location.latitude.floor(5)&lon=location.longitude.floor(5)&appid=#{Rails.application.secrets.openweathermap_api_key}" 
-    binding.pry
     url = "http://api.openweathermap.org/data/2.5/weather?lat=#{@location.latitude.floor(5)}&lon=#{@location.longitude.floor(5)}&appid=#{Rails.application.secrets.openweathermap_api_key}"
     @response = HTTParty.get(url)
     weather_conditions = @response["weather"]
-    binding.pry
     @current_weather = weather_conditions[0]["main"]
   end
+
+  # GET /location_weather_score
+  def show 
+    score += 1
+  end  
+
 end    
+
+
 
 # PATCH/PUT /locations/1
 #   def update

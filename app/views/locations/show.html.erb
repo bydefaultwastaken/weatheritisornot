@@ -1,27 +1,28 @@
-<%= 'require pry' %>
 <div class='page-header'>
   <h3><%= @location.name %></h3>
 </div>
 
 <div class='row'>
-  <div class='col-lg-4'>
-    <h3>Address</h3>
-    <h4><%= @location.address %></h4>
+  <div class='col-lg-6'>
+    <h4>Address: <%= @location.address %></h4>
   </div>
 
-  <div class='col-lg-4'>
+  <div class='col-lg-6'>
+    <h4>Google Maps Satellite View:</h4>
     <%= render 'google_map', location: @location %>
-    <h4>Your guess: <%= @location.weather %></h4>
-    <h4>Actual weather:</h4>
+ 
+    <h4>Current Weather Satellite View</h4>
     <%= render 'weather_map', location: @location %>
-    <br>
-    <%= render 'weather_forecast', location: @location %>
-    <h4><<%= @location.current_weather %></h4>
-  </div>
+    <!-- <h4>Current Conditions/5-Day Weather Forecast</h4> -->
+    <%#= render 'weather_forecast', location: @location %>    
+  </div>  
 </div>
 
 <div class='well-sm'>
-  <%= link_to 'Edit', edit_location_path(@location), class: 'btn btn-info' %> |
-  <%= link_to 'Go Back', locations_path %> |
-  <%= link_to 'Weather', location_weather_index_path(@location) %>
+  <%= link_to 'Edit Location', edit_location_path(@location), class: 'btn btn-info' %> |
+  <%= link_to 'Return to Location List', locations_path, class: 'btn btn-info' %>
+  <h4>You guessed that at <%= @location.name %> the weather is currently <%= @location.weather.downcase %>. </h4>
+  <h4>Are you correct? Click below to find out. </h4>
+  <%= link_to '????', location_weather_index_path(@location), class: 'btn btn-info' %>
 </div>
+  

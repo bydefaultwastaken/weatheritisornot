@@ -7,17 +7,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Weather It Is Or Not</a>
+      <a class="navbar-brand" href="/">Weather It Is Or Not - Clear, Rain, Snow? </a>
+      <h4>Take a guess for any location.</h4>
+      <%= link_to 'Click to Try!', new_location_path, class: 'btn btn-info' %>
     </div>
-
-    <form class="navbar-form navbar-left" role="search" action="/">
-      <div class="form-group">
-        <input type="text" name="q" class="form-control" placeholder="Guess the weather near...">
-      </div>
-      <button type="submit" class="btn btn-info">Enter Location</button>
-    </form>
-
     <ul class='nav navbar-nav navbar-right'>
+    
       <% if current_user %>
         <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
       <% else %>

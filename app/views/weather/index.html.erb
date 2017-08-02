@@ -1,6 +1,17 @@
 <div class='row'>
   <div class='col-lg-4'>
-    <h1><%= @current_weather %></h1>
+    <h4>Your guess: <%= @location.weather.downcase %></h4>
+    <h4>Actual weather: <%= @current_weather.downcase %></h4>
+    <% if @location.weather.downcase == @current_weather.downcase %>
+      <h4>Congratulations! You were correct!</h4>
+      <h4>Click below to check your score!</h4>
+      <%= link_to 'Check Score', locations_path, class: 'btn btn-info' %>
+    <% else %>
+      <h4>Sorry, click below to return and try to guess the weather at another location.</h4>
+      <div class='well-sm'>
+        <%= link_to 'Return to Location List', locations_path, class: 'btn btn-info' %>
+      </div>
+    <% end %>        
   </div>
 </div>
 
