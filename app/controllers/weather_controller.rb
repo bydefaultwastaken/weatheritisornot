@@ -11,22 +11,50 @@ class WeatherController < ApplicationController
     @current_weather = weather_conditions[0]["main"]
   end
 
-  # GET /location_weather_score
+  # GET /location_weather
   def show
     @location ||= Location.find(params[:location_id])
     render "weather/index"
   end  
 
-# PATCH/PUT /user_score/rau
+# PATCH/PUT /user_score
   def update
+    @user ||= User.find(params[:user_id])
       @user.score = @user.score += 1
-#     if @location.update(location_params)
-#       redirect_to @location, notice: 'Location updated.'
-#     else
-#       render :edit
-#     end
+      render :show
   end
 end 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # private
 
 #   def set_location
