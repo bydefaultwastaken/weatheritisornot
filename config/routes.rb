@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   end
   # get    '/weather/:id',          to: 'weather#show'
   # get    '/weather',          to: 'weather#edit'
-  devise_for :users
-
-  root to: "locations#index"
+  devise_for :users do
+    patch '/users/score',        to: 'weather#update' 
+  end  
+    root to: "locations#index"
 end

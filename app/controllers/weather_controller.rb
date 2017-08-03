@@ -1,6 +1,5 @@
 require 'httparty'
 class WeatherController < ApplicationController
-  score = 0
   
   # GET /location_weather
   def index
@@ -13,23 +12,21 @@ class WeatherController < ApplicationController
   end
 
   # GET /location_weather_score
-  def show 
-    score += 1
+  def show
+    @location ||= Location.find(params[:location_id])
+    render "weather/index"
   end  
 
-end    
-
-
-
-# PATCH/PUT /locations/1
-#   def update
+# PATCH/PUT /user_score/rau
+  def update
+      @user.score = @user.score += 1
 #     if @location.update(location_params)
 #       redirect_to @location, notice: 'Location updated.'
 #     else
 #       render :edit
 #     end
-#   end
-
+  end
+end 
 # private
 
 #   def set_location
