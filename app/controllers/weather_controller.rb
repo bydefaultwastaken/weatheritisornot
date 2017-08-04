@@ -1,29 +1,39 @@
 require 'httparty'
 class WeatherController < ApplicationController
-  
+  before_action :find_location, only: [:index]
+
+  # before_action :find_user, only: [:index]
   # GET /location_weather
   def index
-    @location ||= Location.find(params[:location_id])
-    # url = "http://api.openweathermap.org/data/2.5/weather?lat=location.latitude.floor(5)&lon=location.longitude.floor(5)&appid=#{Rails.application.secrets.openweathermap_api_key}" 
+    @user = User.new
     url = "http://api.openweathermap.org/data/2.5/weather?lat=#{@location.latitude.floor(5)}&lon=#{@location.longitude.floor(5)}&appid=#{Rails.application.secrets.openweathermap_api_key}"
     @response = HTTParty.get(url)
     weather_conditions = @response["weather"]
     @current_weather = weather_conditions[0]["main"]
+    # service = UpdateUserScore.new(user: location: params[:score, :weather, :current_weather]).call
   end
 
   # GET /location_weather
-  def show
-    @location ||= Location.find(params[:location_id])
-    render "weather/index"
-  end  
+  # def show  
+  #   @location ||= Location.find(params[:location_id])
+  #   @user ||= User.find(params[:user_id])
+  # end  
 
 # PATCH/PUT /user_score
-  def update
-    @user ||= User.find(params[:user_id])
-      @user.score = @user.score += 1
-      render :show
+  # def update
+  # end
+
+private
+
+  def find_location
+    @location = Location.find params[:location_id]
   end
-end 
+
+  # def find_user
+  #   @user = User.find params[:user_id]
+  # end
+
+end
 
 
 
@@ -55,16 +65,20 @@ end
 
 
 
+
+
+
+ 
 # private
 
-#   def set_location
-#     @location = Location.find(params[:id])
+#   def set_user
+#     @user = User.find(params[:id])
 #   end
 
-#   def location_params
-#     params.require(:location).permit(:name, :weather, :address)
+#   def user_params
+#     params.require(:user).permit(:email, :score)
 #   end
-
+# end
 
   
   # @location = Location.find(params[@location_id])
