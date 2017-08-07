@@ -1,17 +1,39 @@
 require 'httparty'
-class WeatherController < ApplicationController
-  before_action :find_location, only: [:index]
-
+class ScoresController < LocationsController
+  # before_action :authenticate_user!
+  before_action :set_score, only: [:show]
   # before_action :find_user, only: [:index]
   # GET /location_weather
-  def index
-    @user = User.new
+  # @score = Score.new(params[:point_count])
+
+  # def index
+  #   @scores = SearchesScores.new(query: params[:q]).call
+  # new  
+  # end
+
+  def show
     url = "http://api.openweathermap.org/data/2.5/weather?lat=#{@location.latitude.floor(5)}&lon=#{@location.longitude.floor(5)}&appid=#{Rails.application.secrets.openweathermap_api_key}"
     @response = HTTParty.get(url)
     weather_conditions = @response["weather"]
     @current_weather = weather_conditions[0]["main"]
-    # service = UpdateUserScore.new(user: location: params[:score, :weather, :current_weather]).call
+    if @location.weather_guess.downcase == @current_weather.downcase
+      # @score.point_count += 1
+      # @score.increment!(:point_count)
+      @score.update_attribute(:point_count, @score.point_count+1)
+      @score.save
+      @message = "Congratulations! You were correct! Click below to guess again."
+        # @message = "Congratulations! You were correct! Your score is: #{@score.point_count}."
+        
+    else
+      @message = "Sorry, click below to return and try to guess the weather at another location."
+    end
+  # @message = ScoresHelper::ScoreMessage.new
   end
+
+    # @message = point_message(@location, @current_weather) 
+    # service = UpdateUserScore.new
+    # service.call
+  # end
 
   # GET /location_weather
   # def show  
@@ -24,10 +46,14 @@ class WeatherController < ApplicationController
   # end
 
 private
-
-  def find_location
-    @location = Location.find params[:location_id]
+  def set_score
+    @score ||= Score.new(params[:point_count])
   end
+
+  # def score_params
+  #   params.require(:score).permit(:point_count)
+    # @location = Location.find(params[:location_id])
+  # end
 
   # def find_user
   #   @user = User.find params[:user_id]

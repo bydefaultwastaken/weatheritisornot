@@ -10,20 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308034318) do
+ActiveRecord::Schema.define(version: 20170805011635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "locations", force: :cascade do |t|
-    t.text     "name"
-    t.text     "weather"
-    t.text     "address"
+    t.text     "name",            null: false
+    t.text     "weather_guess",   null: false
+    t.text     "address",         null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.float    "latitude"
     t.float    "longitude"
     t.text     "current_weather"
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.integer  "point_count", default: 0, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -39,7 +45,6 @@ ActiveRecord::Schema.define(version: 20170308034318) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.integer  "score",                  default: 0,  null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end

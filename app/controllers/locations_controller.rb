@@ -57,8 +57,9 @@ class LocationsController < ApplicationController
   end
 
   def location_params
-    params.require(:location).permit(:name, :weather, :address)
+    params.require(:location).permit(:name, :weather_guess, :address)
   end
+  
 
   # def location_weather_update
   #   @location.current_weather = RetrievesLocationWeather.new(:Rails_application_secrets_openweathermap_api_key, :latitude, :longitude).call 

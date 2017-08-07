@@ -18,7 +18,7 @@
       <tr>
         <td><%= link_to location.name.upcase, location %></td>
         <td><%= location.address.upcase%></td>
-        <td><%= location.weather.capitalize %> (click on Edit to change guess)</td>
+        <td><%= location.weather_guess.capitalize %> (click on Edit to change guess)</td>
         <td>Click on the Name to Find Out!</td>
         <td><%= link_to 'Edit', edit_location_path(location) %> | 
             <%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>

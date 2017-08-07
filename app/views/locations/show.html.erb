@@ -21,8 +21,8 @@
 <div class='well-sm'>
   <%= link_to 'Edit Location', edit_location_path(@location), class: 'btn btn-info' %> |
   <%= link_to 'Return to Location List', locations_path, class: 'btn btn-info' %>
-  <h4>You guessed that at <%= @location.name %> the weather is currently <%= @location.weather.downcase %>. </h4>
+  <h4>You guessed that at <%= @location.name %> the weather is currently <%= @location.weather_guess.downcase %>. </h4>
   <h4>Are you correct? Click below to find out. </h4>
-  <%= link_to '????', location_weather_index_path(@location), class: 'btn btn-info' %>
+  <%= link_to '????', score_path(@location), class: 'btn btn-info' %>
 </div>
   
